@@ -10,10 +10,11 @@ import NotFound from './components/nav/NotFound.vue';
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    // { path: '/', redirect: '/teams' },
-    { path: '/teams', component: TeamsList, alias: '/' },
-    { path: '/users', component: UsersList },
-    { path: '/teams/:teamId', component: TeamMembers, props: true },
+    // { path: '/', redirect: '/users' },
+    { path: '/teams', component: TeamsList, children: [
+      { path: ':teamId', component: TeamMembers, props: true }
+    ] },
+    { path: '/users', component: UsersList, alias: '/' },
     { path: '/:notFound(.*)', component: NotFound }   
   ],
   linkActiveClass: 'active' // default css class is 'router-link-active'
