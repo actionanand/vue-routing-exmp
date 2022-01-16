@@ -32,6 +32,12 @@ export default {
     this.loadTeamMembers(this.teamId);
     console.log(this.$route.query); // to access query params
   },
+  beforeRouteUpdate(_to, _from, next) {
+    console.log('beforeRouteUpdate inside "Team Member"');
+    // the same logic of 'watch' here can be achieved using this 'beforeRouteUpdate'
+    // this.loadTeamMembers(_to.params.teamId);
+    next();
+  },
   methods: {
     loadTeamMembers(teamId) {
       // this.$route.path // will give relative path
