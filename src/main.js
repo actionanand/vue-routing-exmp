@@ -23,7 +23,14 @@ const router = createRouter({
     },
     { path: '/:notFound(.*)', component: NotFound }   
   ],
-  linkActiveClass: 'active' // default css class is 'router-link-active'
+  linkActiveClass: 'active', // default css class is 'router-link-active'
+  scrollBehavior(to, from, savedPosition) {
+    console.log(to, from, savedPosition); // savedPosition will be having vaue when we click back button
+    if (savedPosition) {
+      return savedPosition;
+    }
+    return {left: 0, top: 0};
+  }
 });
 
 const app = createApp(App);
