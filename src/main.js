@@ -13,7 +13,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     // { path: '/', redirect: '/users' },
-    { name: 'teams', path: '/teams', alias: '/',
+    { name: 'teams', path: '/teams', alias: '/', meta: { neededAuth: true },
       components: { default: TeamsList, footer: TeamFooter }, 
       children: [
         { name: 'team-member', path: ':teamId', component: TeamMembers, props: true }
@@ -46,6 +46,10 @@ router.beforeEach((to, from, next) => {
   // } else {
   //   next({ name: 'team-member', params: {teamId: 't3' }});
   // }
+  if(to.meta.neededAuth) {
+    // implement Auth logic
+    console.log('Auth needed!');
+  }
   next();
 });
 
