@@ -6,15 +6,21 @@ import TeamsList from './components/teams/TeamsList.vue';
 import UsersList from './components/users/UsersList.vue';
 import TeamMembers from './components/teams/TeamMembers.vue';
 import NotFound from './components/nav/NotFound.vue';
+import TeamFooter from './components/teams/TeamFooter.vue';
+import UserFooter from './components/users/UserFooter.vue';
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     // { path: '/', redirect: '/users' },
-    { name: 'teams', path: '/teams', component: TeamsList, children: [
-      { name: 'team-member', path: ':teamId', component: TeamMembers, props: true }
-    ] },
-    { path: '/users', component: UsersList, alias: '/' },
+    { name: 'teams', path: '/teams', alias: '/',
+      components: { default: TeamsList, footer: TeamFooter }, 
+      children: [
+        { name: 'team-member', path: ':teamId', component: TeamMembers, props: true }
+      ] 
+    },
+    { path: '/users', components: { default: UsersList, footer: UserFooter } 
+    },
     { path: '/:notFound(.*)', component: NotFound }   
   ],
   linkActiveClass: 'active' // default css class is 'router-link-active'
