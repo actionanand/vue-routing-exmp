@@ -30,6 +30,7 @@ export default {
   },
   created() {
     this.loadTeamMembers(this.teamId);
+    console.log(this.$route.query); // to access query params
   },
   methods: {
     loadTeamMembers(teamId) {
