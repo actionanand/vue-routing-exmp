@@ -9,6 +9,7 @@
         :role="member.role"
       ></user-item>
     </ul>
+    <router-link to="t2">Go to Team 2</router-link>
   </section>
 </template>
 
@@ -16,18 +17,51 @@
 import UserItem from '../users/UserItem.vue';
 
 export default {
+  inject: ['users', 'teams'],
+  props: ['teamId'],
   components: {
     UserItem
   },
   data() {
     return {
-      teamName: 'Test',
-      members: [
-        { id: 'u1', fullName: 'Max Schwarz', role: 'Engineer' },
-        { id: 'u2', fullName: 'Max Schwarz', role: 'Engineer' },
-      ],
+      teamName: '',
+      members: [],
     };
   },
+  created() {
+    this.loadTeamMembers(this.teamId);
+    console.log(this.$route.query); // to access query params
+  },
+  beforeRouteUpdate(_to, _from, next) {
+    console.log('beforeRouteUpdate inside "Team Member"');
+    // the same logic of 'watch' here can be achieved using this 'beforeRouteUpdate'
+    // this.loadTeamMembers(_to.params.teamId);
+    next();
+  },
+  methods: {
+    loadTeamMembers(teamId) {
+      // this.$route.path // will give relative path
+      // const teamId = this.$route.params.teamId;
+      const selectedTeam = this.teams.find(team => team.id === teamId);
+      // if (!selectedTeam) return;
+      const members = selectedTeam.members;
+      const selectedMembers = [];
+
+      for(const member of members) {
+        const selectedUser = this.users.find(user => user.id === member);
+        selectedMembers.push(selectedUser);
+      }
+
+      this.members = selectedMembers;
+      this.teamName = selectedTeam.name;
+    }
+  },
+  watch: {
+    teamId(newId) {
+      // this is to update the content when url chnages being in the same page(only data change)
+      this.loadTeamMembers(newId);
+    }
+  }
 };
 </script>
 
