@@ -9,8 +9,9 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/teams', component: TeamsList },
-    { path: '/users', component: UsersList }
-  ]
+    { path: '/users', component: UsersList }  
+  ],
+  linkActiveClass: 'active' // default css class is 'router-link-active'
 });
 
 const app = createApp(App);
