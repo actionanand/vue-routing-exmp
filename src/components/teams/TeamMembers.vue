@@ -18,6 +18,7 @@ import UserItem from '../users/UserItem.vue';
 
 export default {
   inject: ['users', 'teams'],
+  props: ['teamId'],
   components: {
     UserItem
   },
@@ -28,14 +29,14 @@ export default {
     };
   },
   created() {
-    this.loadTeamMembers(this.$route);
+    this.loadTeamMembers(this.teamId);
   },
   methods: {
-    loadTeamMembers(route) {
+    loadTeamMembers(teamId) {
       // this.$route.path // will give relative path
-      const teamId = route.params.teamId;
+      // const teamId = this.$route.params.teamId;
       const selectedTeam = this.teams.find(team => team.id === teamId);
-      if (!selectedTeam) return;
+      // if (!selectedTeam) return;
       const members = selectedTeam.members;
       const selectedMembers = [];
 
@@ -49,9 +50,9 @@ export default {
     }
   },
   watch: {
-    $route(newRoute) {
+    teamId(newId) {
       // this is to update the content when url chnages being in the same page(only data change)
-      this.loadTeamMembers(newRoute);
+      this.loadTeamMembers(newId);
     }
   }
 };
