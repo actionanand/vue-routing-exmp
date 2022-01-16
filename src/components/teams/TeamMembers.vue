@@ -9,6 +9,7 @@
         :role="member.role"
       ></user-item>
     </ul>
+    <router-link to="t2">Go to Team 2</router-link>
   </section>
 </template>
 
@@ -27,19 +28,31 @@ export default {
     };
   },
   created() {
-    // this.$route.path // will give relative path
-    const teamId = this.$route.params.teamId;
-    const selectedTeam = this.teams.find(team => team.id === teamId);
-    const members = selectedTeam.members;
-    const selectedMembers = [];
+    this.loadTeamMembers(this.$route);
+  },
+  methods: {
+    loadTeamMembers(route) {
+      // this.$route.path // will give relative path
+      const teamId = route.params.teamId;
+      const selectedTeam = this.teams.find(team => team.id === teamId);
+      if (!selectedTeam) return;
+      const members = selectedTeam.members;
+      const selectedMembers = [];
 
-    for(const member of members) {
-      const selectedUser = this.users.find(user => user.id === member);
-      selectedMembers.push(selectedUser);
+      for(const member of members) {
+        const selectedUser = this.users.find(user => user.id === member);
+        selectedMembers.push(selectedUser);
+      }
+
+      this.members = selectedMembers;
+      this.teamName = selectedTeam.name;
     }
-
-    this.members = selectedMembers;
-    this.teamName = selectedTeam.name;
+  },
+  watch: {
+    $route(newRoute) {
+      // this is to update the content when url chnages being in the same page(only data change)
+      this.loadTeamMembers(newRoute);
+    }
   }
 };
 </script>
