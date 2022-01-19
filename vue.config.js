@@ -3,5 +3,7 @@ module.exports = {
   devServer: {
       disableHostCheck: true
   },
-  // publicPath: '/vue-routing-exmp/'
+  publicPath: process.env.NODE_ENV === 'production'
+  ? '/vue-routing-exmp/' // note the trailing slash
+  : '/',
 }

@@ -10,7 +10,7 @@ import TeamFooter from './components/teams/TeamFooter.vue';
 import UserFooter from './components/users/UserFooter.vue';
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/vue-routing-exmp/'),
   routes: [
     // { path: '/', redirect: '/users' },
     { name: 'teams', path: '/teams', alias: '/', meta: { neededAuth: true },
